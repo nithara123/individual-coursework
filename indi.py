@@ -14,8 +14,6 @@ profit_by_category = df.groupby('Category')['Profit'].sum().reset_index()
 
 # Plotting the bar chart using Streamlit's st.bar_chart()
 st.bar_chart(profit_by_category.set_index('Category')['Profit'])
-st.xlabel('Category')
-st.ylabel('Profit')
 st.title('Profit by Category')
 st.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
 
@@ -24,11 +22,7 @@ st.write('Bar Chart: Profit by Category')
 
 # Plotting the scatter plot using Streamlit's st.line_chart()
 st.line_chart(df[['Sales', 'Profit']])
-st.xlabel('Sales')
-st.ylabel('Profit')
 st.title('Profit vs. Sales')
 
 # Display the scatter plot
 st.write('Line Chart: Profit vs. Sales')
-
-
