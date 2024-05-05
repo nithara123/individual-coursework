@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 
 # Load the CSV file into a DataFrame with 'latin1' encoding
-df = pd.read_csv('C:/Users/Admin/Downloads/Global Superstore lite (1).csv', encoding='latin1')
+df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 
 # Calculate profit by category
 profit_by_category = df.groupby('Category')['Profit'].sum().reset_index()
