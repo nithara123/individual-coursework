@@ -59,3 +59,25 @@ ax.set_title('Top 10 Customers by Total Profit')
 
 # Display the pie chart using Streamlit's st.pyplot()
 st.pyplot(fig)
+
+
+#OPTIMIZE PRODUCT SELECTION
+# Assuming you have loaded your data into a DataFrame called df
+# For example:
+# df = pd.read_csv('path_to_your_csv_file.csv')
+
+# Selecting relevant columns for analysis
+product_data = df[['Product ID', 'Product Name', 'Sales', 'Profit']]
+
+# Grouping data by Product ID and calculating total sales quantity and profit
+product_summary = product_data.groupby(['Product ID', 'Product Name']).agg({'Sales': 'sum', 'Profit': 'sum'}).reset_index()
+
+# Plotting the scatter plot to visualize product selection
+plt.figure(figsize=(10, 6))
+plt.scatter(product_summary['Sales'], product_summary['Profit'], alpha=0.5)
+plt.xlabel('Sales')
+plt.ylabel('Profit')
+plt.title('Product Selection: Sales vs. Profit')  # Naming the graph
+plt.grid(True)
+plt.tight_layout()
+plt.show()
