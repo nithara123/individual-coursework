@@ -13,15 +13,18 @@ df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 profit_by_category = df.groupby('Category')['Profit'].sum().reset_index()
 
 # Plotting the bar chart using Streamlit's st.bar_chart()
-st.bar_chart(profit_by_category.set_index('Category')['Profit'])
-st.title('Profit by Category')
-st.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+st.bar_chart(profit_by_category.set_index('Category')['Profit'], use_container_width=True)  # Adjusts chart width
 
-# Display the bar chart
+# Display the bar chart title
+st.title('Profit by Category')
+
+# Display the bar chart with rotated x-axis labels for better readability
 st.write('Bar Chart: Profit by Category')
 
 # Plotting the scatter plot using Streamlit's st.line_chart()
 st.line_chart(df[['Sales', 'Profit']])
+
+# Display the scatter plot title
 st.title('Profit vs. Sales')
 
 # Display the scatter plot
