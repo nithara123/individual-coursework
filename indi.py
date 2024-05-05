@@ -1,39 +1,31 @@
 import streamlit as st
 import pandas as pd
 
-#MAXIMIZING THE PROFIT
 # Load the CSV file into a DataFrame with 'latin1' encoding
 df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 
 # Calculate profit by category
 profit_by_category = df.groupby('Category')['Profit'].sum().reset_index()
 
-# Set up the layout of the dashboard
-st.title('Sales and Profit Dashboard')
+# Display the bar chart title
+st.title('Profit by Category')
 
-# Add a sidebar for user interaction
-st.sidebar.title('Dashboard Options')
-chart_type = st.sidebar.selectbox('Select Chart Type', ['Bar Chart', 'Scatter Plot'])
+# Display the bar chart with rotated x-axis labels for better readability
+st.write('Bar Chart: Profit by Category')
 
-# Display the selected chart based on user's choice
-if chart_type == 'Bar Chart':
-    # Display the bar chart title
-    st.subheader('Profit by Category')
+# Plotting the bar chart using Streamlit's st.bar_chart()
+st.bar_chart(profit_by_category.set_index('Category')['Profit'], use_container_width=True)  # Adjusts chart width
 
-    # Display the bar chart using Streamlit's st.bar_chart()
-    st.bar_chart(profit_by_category.set_index('Category')['Profit'], use_container_width=True)  # Adjusts chart width
 
-else:
-    # Display the scatter plot title
-    st.subheader('Profit vs. Sales')
+# Display the scatter plot title
+st.title('Profit vs. Sales')
 
-    # Display the scatter plot using Streamlit's st.line_chart()
-    st.line_chart(df[['Sales', 'Profit']])
+# Display the scatter plot
+st.write('Line Chart: Profit vs. Sales')
 
-# Add some descriptive text or explanations
-st.write('This dashboard visualizes sales and profit data.')
+# Plotting the scatter plot using Streamlit's st.line_chart()
+st.line_chart(df[['Sales', 'Profit']])
 
-# Optionally, you can add more interactivity or widgets to further enhance the dashboard
 
 #UNDERSTANDING ABOUT THE CUTOMER PREFERENCES
 import pandas as pd
