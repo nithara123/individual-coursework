@@ -1,5 +1,5 @@
 # individual-coursework
-Data visualizing
+#Data visualizing
 import pandas as pd
 import matplotlib.pyplot as plt
 
