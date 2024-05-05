@@ -94,6 +94,7 @@ st.pyplot(fig)  # Display the figure in Streamlit
 #IMPROVE MARKETING EFFECTIVENESS
 import pandas as pd
 import plotly.express as px
+import plotly.graph_objects as go
 import streamlit as st
 
 # Assuming you have loaded your data into a DataFrame called df
@@ -114,9 +115,12 @@ fig = px.line(marketing_data, x='Order Date', y='Profit', title='Improvement in 
 fig.update_traces(mode='markers+lines')  # Display both markers and lines
 fig.update_layout(xaxis_title='Order Date', yaxis_title='Total Profit')
 
-# Add a trend line to show the overall trend
-trendline_results = px.get_trendline_results(fig)
-fig.add_trace(trendline_results.iloc[0].trendline)
+# Calculate and add a trend line to show the overall trend
+trendline = go.Scatter(x=marketing_data['Order Date'],
+                       y=marketing_data['Profit'].rolling(window=7).mean(),
+                       mode='lines',
+                       name='Trend Line')
+fig.add_trace(trendline)
 
 # Display the figure with a title using Streamlit
 st.title('Improvement in Marketing Effectiveness Over Time')
