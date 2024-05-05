@@ -93,7 +93,8 @@ st.pyplot(fig)  # Display the figure in Streamlit
 
 #IMPROVE MARKETING EFFECTIVENESS
 import pandas as pd
-import matplotlib.pyplot as plt
+import plotly.express as px
+import streamlit as st
 
 # Assuming you have loaded your data into a DataFrame called df
 # For example:
@@ -108,12 +109,14 @@ marketing_data['Order Date'] = pd.to_datetime(marketing_data['Order Date'])
 # Sort data by Order Date
 marketing_data = marketing_data.sort_values(by='Order Date')
 
-# Plotting the line chart
-plt.figure(figsize=(10, 6))
-plt.plot(marketing_data['Order Date'], marketing_data['Profit'], marker='o', linestyle='-')
-plt.xlabel('Order Date')
-plt.ylabel('Total Profit')
-plt.title('Improvement in Marketing Effectiveness Over Time')
-plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
-plt.tight_layout()
-plt.show()
+# Create an interactive line chart using Plotly
+fig = px.line(marketing_data, x='Order Date', y='Profit', title='Improvement in Marketing Effectiveness Over Time')
+fig.update_traces(mode='markers+lines')  # Display both markers and lines
+fig.update_layout(xaxis_title='Order Date', yaxis_title='Total Profit')
+
+# Add a trend line to show the overall trend
+fig.update_traces(_px_trendlines=[dict(type='linear', name='Trend Line', show_r2=True)])
+
+# Display the figure with a title using Streamlit
+st.title('Improvement in Marketing Effectiveness Over Time')
+st.plotly_chart(fig)
