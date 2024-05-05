@@ -28,8 +28,13 @@ st.line_chart(df[['Sales', 'Profit']])
 
 
 #UNDERSTANDING ABOUT THE CUTOMER PREFERENCES
+import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+
+# Assuming you have loaded your data into a DataFrame called df
+# For example:
+# df = pd.read_csv('path_to_your_csv_file.csv')
 
 # Group the data by Customer ID and Product Category, and calculate the total profit
 customer_preferences = df.groupby(['Customer ID', 'Category'])['Profit'].sum().reset_index()
@@ -47,11 +52,10 @@ sorted_customers = pivot_table.sort_values(by='Total Profit', ascending=False)
 top_customers = sorted_customers.head(10)
 
 # Plotting the pie chart and assigning it to a variable
-top_customers_plot = top_customers['Total Profit'].plot(kind='pie', figsize=(8, 8), autopct='%1.1f%%', startangle=90)
-top_customers_plot.set_ylabel('')  # Remove the y-axis label
-top_customers_plot.set_title('Top 10 Customers by Total Profit')
+fig, ax = plt.subplots(figsize=(8, 8))
+top_customers['Total Profit'].plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=ax)
+ax.set_ylabel('')  # Remove the y-axis label
+ax.set_title('Top 10 Customers by Total Profit')
 
-# Display the named graph using plt.show()
-plt.show(top_customers_plot)
-
-
+# Display the pie chart using Streamlit's st.pyplot()
+st.pyplot(fig)
