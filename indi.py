@@ -115,7 +115,7 @@ fig.update_traces(mode='markers+lines')  # Display both markers and lines
 fig.update_layout(xaxis_title='Order Date', yaxis_title='Total Profit')
 
 # Add a trend line to show the overall trend
-fig.update_traces(_px_trendlines=[dict(type='linear', name='Trend Line', show_r2=True)])
+fig.add_trace(px.get_trendline_results(fig)[0].px_fit_results.iloc[:, 1])
 
 # Display the figure with a title using Streamlit
 st.title('Improvement in Marketing Effectiveness Over Time')
