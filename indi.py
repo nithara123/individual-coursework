@@ -89,3 +89,31 @@ plt.tight_layout()
 st.title('Product Selection: Sales vs. Profit')  # Display figure title in Streamlit
 st.pyplot(fig)  # Display the figure in Streamlit
 
+
+
+#IMPROVE MARKETING EFFECTIVENESS
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Assuming you have loaded your data into a DataFrame called df
+# For example:
+# df = pd.read_csv('path_to_your_csv_file.csv')
+
+# Group the data by Order Date and calculate the total profit
+marketing_data = df.groupby('Order Date')['Profit'].sum().reset_index()
+
+# Convert Order Date to datetime format
+marketing_data['Order Date'] = pd.to_datetime(marketing_data['Order Date'])
+
+# Sort data by Order Date
+marketing_data = marketing_data.sort_values(by='Order Date')
+
+# Plotting the line chart
+plt.figure(figsize=(10, 6))
+plt.plot(marketing_data['Order Date'], marketing_data['Profit'], marker='o', linestyle='-')
+plt.xlabel('Order Date')
+plt.ylabel('Total Profit')
+plt.title('Improvement in Marketing Effectiveness Over Time')
+plt.xticks(rotation=45, ha='right')  # Rotate x-axis labels for better readability
+plt.tight_layout()
+plt.show()
