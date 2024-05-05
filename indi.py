@@ -125,3 +125,31 @@ fig.add_trace(trendline)
 # Display the figure with a title using Streamlit
 st.title('Improvement in Marketing Effectiveness Over Time')
 st.plotly_chart(fig)
+
+
+
+#ENHANCE COMPETITIVE ADVANTAGE
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Assuming you have loaded your data into a DataFrame called df
+# For example:
+# df = pd.read_csv('path_to_your_csv_file.csv')
+
+# Group the data by Category and calculate the total sales quantity and profit
+sales_profit_by_category = df.groupby('Category').agg({'Quantity': 'sum', 'Profit': 'sum'}).reset_index()
+
+# Sort categories by total profit in descending order
+sorted_categories = sales_profit_by_category.sort_values(by='Profit', ascending=False)
+
+# Plotting the bar chart
+plt.figure(figsize=(10, 6))
+plt.bar(sorted_categories['Category'], sorted_categories['Quantity'], label='Sales Quantity', color='skyblue')
+plt.bar(sorted_categories['Category'], sorted_categories['Profit'], label='Profit', color='orange', alpha=0.7)
+plt.xlabel('Category')
+plt.ylabel('Amount')
+plt.title('Sales Quantity and Profit by Category')
+plt.xticks(rotation=45, ha='right')
+plt.legend()
+plt.tight_layout()
+plt.show()
