@@ -115,9 +115,9 @@ fig.update_traces(mode='markers+lines')  # Display both markers and lines
 fig.update_layout(xaxis_title='Order Date', yaxis_title='Total Profit')
 
 # Add a trend line to show the overall trend
-fig.add_trace(px.get_trendline_results(fig)[0].px_fit_results.iloc[:, 1])
+trendline_results = px.get_trendline_results(fig)
+fig.add_trace(trendline_results.iloc[0].trendline)
 
 # Display the figure with a title using Streamlit
 st.title('Improvement in Marketing Effectiveness Over Time')
 st.plotly_chart(fig)
-
