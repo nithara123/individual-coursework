@@ -23,3 +23,8 @@ plt.xlabel('Sales')
 plt.ylabel('Profit')
 plt.title('Profit vs. Sales')
 plt.show()
+
+import streamlit as st
+
+st.title('Individual coursework')
+st.write('Dashboard')
