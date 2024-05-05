@@ -15,11 +15,11 @@ profit_by_category = df.groupby('Category')['Profit'].sum().reset_index()
 # Display the bar chart title
 st.title('Profit by Category')
 
-# Plotting the bar chart using Streamlit's st.bar_chart()
-st.bar_chart(profit_by_category.set_index('Category')['Profit'], use_container_width=True)  # Adjusts chart width
-
 # Display the bar chart with rotated x-axis labels for better readability
 st.write('Bar Chart: Profit by Category')
+
+# Plotting the bar chart using Streamlit's st.bar_chart()
+st.bar_chart(profit_by_category.set_index('Category')['Profit'], use_container_width=True)  # Adjusts chart width
 
 # Display the scatter plot title
 st.title('Profit vs. Sales')
