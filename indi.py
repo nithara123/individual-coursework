@@ -62,6 +62,10 @@ st.pyplot(fig)
 
 
 #OPTIMIZE PRODUCT SELECTION
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+
 # Assuming you have loaded your data into a DataFrame called df
 # For example:
 # df = pd.read_csv('path_to_your_csv_file.csv')
@@ -80,4 +84,9 @@ plt.ylabel('Profit')
 plt.title('Product Selection: Sales vs. Profit')  # Naming the graph
 plt.grid(True)
 plt.tight_layout()
-plt.show()
+
+# Displaying the named figure in Streamlit
+st.title('Product Selection: Sales vs. Profit')  # Display figure title in Streamlit
+st.pyplot()  # Display the figure in Streamlit
+
+# If running locally, use st.pyplot(plt.gcf()) instead of st.pyplot()
