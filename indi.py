@@ -77,16 +77,15 @@ product_data = df[['Product ID', 'Product Name', 'Sales', 'Profit']]
 product_summary = product_data.groupby(['Product ID', 'Product Name']).agg({'Sales': 'sum', 'Profit': 'sum'}).reset_index()
 
 # Plotting the scatter plot to visualize product selection
-plt.figure(figsize=(10, 6))
-plt.scatter(product_summary['Sales'], product_summary['Profit'], alpha=0.5)
-plt.xlabel('Sales')
-plt.ylabel('Profit')
-plt.title('Product Selection: Sales vs. Profit')  # Naming the graph
-plt.grid(True)
+fig, ax = plt.subplots(figsize=(10, 6))
+ax.scatter(product_summary['Sales'], product_summary['Profit'], alpha=0.5)
+ax.set_xlabel('Sales')
+ax.set_ylabel('Profit')
+ax.set_title('Product Selection: Sales vs. Profit')  # Naming the graph
+ax.grid(True)
 plt.tight_layout()
 
 # Displaying the named figure in Streamlit
 st.title('Product Selection: Sales vs. Profit')  # Display figure title in Streamlit
-st.pyplot()  # Display the figure in Streamlit
+st.pyplot(fig)  # Display the figure in Streamlit
 
-# If running locally, use st.pyplot(plt.gcf()) instead of st.pyplot()
