@@ -130,7 +130,8 @@ st.plotly_chart(fig)
 
 #ENHANCE COMPETITIVE ADVANTAGE
 import pandas as pd
-import matplotlib.pyplot as plt
+import streamlit as st
+import altair as alt
 
 # Assuming you have loaded your data into a DataFrame called df
 # For example:
@@ -142,15 +143,21 @@ sales_profit_by_category = df.groupby('Category').agg({'Quantity': 'sum', 'Profi
 # Sort categories by total profit in descending order
 sorted_categories = sales_profit_by_category.sort_values(by='Profit', ascending=False)
 
-# Plotting the bar chart
-plt.figure(figsize=(10, 6))
-plt.bar(sorted_categories['Category'], sorted_categories['Quantity'], label='Sales Quantity', color='skyblue')
-plt.bar(sorted_categories['Category'], sorted_categories['Profit'], label='Profit', color='orange', alpha=0.7)
-plt.xlabel('Category')
-plt.ylabel('Amount')
-plt.title('Sales Quantity and Profit by Category')
-plt.xticks(rotation=45, ha='right')
-plt.legend()
-plt.tight_layout()
-plt.title('Sales Quantity and Profit by Category')  # Name the graph
-plt.show()
+# Plotting the chart using Altair
+chart = alt.Chart(sorted_categories).mark_bar().encode(
+    x='Category',
+    y='Profit',
+    color=alt.condition(
+        alt.datum.Profit > 0,
+        alt.value('green'),  # Color for positive profits
+        alt.value('red')  # Color for negative profits
+    ),
+    tooltip=['Category', 'Profit']
+).properties(
+    width=600,
+    height=400,
+    title='Sales Quantity and Profit by Category'
+).interactive()
+
+# Display the chart using Streamlit
+st.write(chart)
