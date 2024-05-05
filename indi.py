@@ -132,6 +132,10 @@ st.plotly_chart(fig)
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Assuming you have loaded your data into a DataFrame called df
+# For example:
+# df = pd.read_csv('path_to_your_csv_file.csv')
+
 # Group the data by Category and calculate the total sales quantity and profit
 sales_profit_by_category = df.groupby('Category').agg({'Quantity': 'sum', 'Profit': 'sum'}).reset_index()
 
