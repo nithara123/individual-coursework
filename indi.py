@@ -11,6 +11,9 @@ df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 # Set up the layout
 st.set_page_config(layout="wide")
 
+# Define custom colors
+colors = ['lightgreen', 'darkgreen', 'gray', 'black']
+
 # First row: Profit vs. Sales Line Chart and Top 10 Customers by Total Profit Pie Chart
 col1, col2 = st.columns([2, 1])
 
@@ -41,7 +44,7 @@ col2.markdown("### Top 10 Customers by Total Profit")
 
 # Plotting the pie chart for top 10 customers
 fig1, ax1 = plt.subplots(figsize=(3, 3))  # Adjusted figsize
-top_customers['Total Profit'].plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=ax1, colors=['lightgreen', 'darkgreen', 'gray'])
+top_customers['Total Profit'].plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=ax1, colors=colors)
 ax1.set_ylabel('')  # Remove the y-axis label
 ax1.set_title('Top 10 Customers by Total Profit')
 
@@ -85,7 +88,7 @@ marketing_data = marketing_data.sort_values(by='Order Date')
 
 # Create an interactive line chart for marketing effectiveness using Plotly
 fig3 = px.line(marketing_data, x='Order Date', y='Profit', title='Improvement in Marketing Effectiveness Over Time')
-fig3.update_traces(mode='markers+lines', marker_color='darkgreen', line_color='gray')  # Updated colors
+fig3.update_traces(mode='markers+lines', marker_color='darkgreen', line_color='black')  # Updated colors
 fig3.update_layout(xaxis_title='Order Date', yaxis_title='Total Profit')
 
 # Calculate and add a trend line to show the overall trend
