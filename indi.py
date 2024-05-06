@@ -154,7 +154,7 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
     y='Profit',
     color=alt.condition(
         alt.datum.Profit > 0,
-        alt.value('darkblue'),  # Change color to dark blue for positive profits
+        alt.value('lightblue'),  # Change color to dark blue for positive profits
         alt.value('red')  # Color for negative profits
     ),
     tooltip=['Category', 'Profit']
