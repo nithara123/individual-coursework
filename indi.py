@@ -12,7 +12,7 @@ df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 st.title('Profit vs. Sales')
 
 # Plotting the scatter plot using Streamlit's st.line_chart()
-st.line_chart(df[['Sales', 'Profit']], width=400, height=300)
+st.line_chart(df[['Sales', 'Profit']])
 
 # Group the data by Customer ID and Product Category, and calculate the total profit
 customer_preferences = df.groupby(['Customer ID', 'Category'])['Profit'].sum().reset_index()
@@ -30,7 +30,7 @@ sorted_customers = pivot_table.sort_values(by='Total Profit', ascending=False)
 top_customers = sorted_customers.head(10)
 
 # Plotting the pie chart for top 10 customers
-fig1, ax1 = plt.subplots(figsize=(4, 4))
+fig1, ax1 = plt.subplots(figsize=(6, 6))
 top_customers['Total Profit'].plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=ax1)
 ax1.set_ylabel('')  # Remove the y-axis label
 ax1.set_title('Top 10 Customers by Total Profit')
@@ -45,7 +45,7 @@ product_data = df[['Product ID', 'Product Name', 'Sales', 'Profit']]
 product_summary = product_data.groupby(['Product ID', 'Product Name']).agg({'Sales': 'sum', 'Profit': 'sum'}).reset_index()
 
 # Plotting the scatter plot for product selection
-fig2, ax2 = plt.subplots(figsize=(4, 3))
+fig2, ax2 = plt.subplots(figsize=(6, 4))
 ax2.scatter(product_summary['Sales'], product_summary['Profit'], alpha=0.5)
 ax2.set_xlabel('Sales')
 ax2.set_ylabel('Profit')
@@ -66,7 +66,7 @@ marketing_data['Order Date'] = pd.to_datetime(marketing_data['Order Date'])
 marketing_data = marketing_data.sort_values(by='Order Date')
 
 # Create an interactive line chart for marketing effectiveness using Plotly
-fig3 = px.line(marketing_data, x='Order Date', y='Profit', title='Marketing Effectiveness Over Time')
+fig3 = px.line(marketing_data, x='Order Date', y='Profit', title='Improvement in Marketing Effectiveness Over Time')
 fig3.update_traces(mode='markers+lines')  # Display both markers and lines
 fig3.update_layout(xaxis_title='Order Date', yaxis_title='Total Profit')
 
@@ -97,8 +97,8 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
     ),
     tooltip=['Category', 'Profit']
 ).properties(
-    width=400,
-    height=250,
+    width=500,
+    height=300,
     title='Sales Quantity and Profit by Category'
 ).interactive()
 
