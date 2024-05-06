@@ -29,6 +29,12 @@ st.markdown(
         font-weight: bold;
         margin-bottom: 15px;
     }
+    .graph-frame {
+        border: 1px solid #ccc;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 30px;
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -45,7 +51,9 @@ col1.markdown('<div class="topic">Profit vs. Sales</div>', unsafe_allow_html=Tru
 
 # Plotting the scatter plot for Profit vs. Sales
 with col1:
+    st.markdown('<div class="graph-frame">', unsafe_allow_html=True)
     st.line_chart(df[['Sales', 'Profit']], width=400, height=300)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Group the data by Customer ID and Product Category, and calculate the total profit
 customer_preferences = df.groupby(['Customer ID', 'Category'])['Profit'].sum().reset_index()
@@ -73,7 +81,9 @@ ax1.set_title('Top 10 Customers by Total Profit')
 
 # Display the pie chart using Streamlit's st.pyplot() in the second column
 with col2:
+    st.markdown('<div class="graph-frame">', unsafe_allow_html=True)
     st.pyplot(fig1)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Second row: Product Selection Scatter Plot and Marketing Effectiveness Line Chart
 col3, col4 = st.columns([1, 1])
@@ -95,7 +105,9 @@ plt.tight_layout()
 
 # Displaying the scatter plot for product selection in the first column of the second row
 with col3:
+    st.markdown('<div class="graph-frame">', unsafe_allow_html=True)
     st.pyplot(fig2)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Display the topic of the second row
 col4.markdown('<div class="topic">Improvement in Marketing Effectiveness Over Time</div>', unsafe_allow_html=True)
@@ -143,7 +155,7 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
     y='Profit',
     color=alt.condition(
         alt.datum.Profit > 0,
-        alt.value('blue'),  # Color for positive profits
+        alt.value('darkblue'),  # Change color to dark blue for positive profits
         alt.value('red')  # Color for negative profits
     ),
     tooltip=['Category', 'Profit']
