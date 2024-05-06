@@ -116,3 +116,4 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
 # Display the chart for sales quantity and profit by category using Streamlit in the third column of the third row
 with col5:
     st.altair_chart(chart, use_container_width=True)
+
