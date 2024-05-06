@@ -8,11 +8,16 @@ import altair as alt
 # Load the CSV file into a DataFrame with 'latin1' encoding
 df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 
-# Display the scatter plot title
-st.title('Profit vs. Sales')
+# Set up the layout
+st.set_page_config(layout="wide")
 
-# Plotting the scatter plot using Streamlit's st.line_chart()
-st.line_chart(df[['Sales', 'Profit']])
+# First row: Profit vs. Sales Line Chart and Top 10 Customers by Total Profit Pie Chart
+col1, col2 = st.beta_columns(2)
+
+# Plotting the scatter plot for Profit vs. Sales
+with col1:
+    st.title('Profit vs. Sales')
+    st.line_chart(df[['Sales', 'Profit']], width=400, height=300)
 
 # Group the data by Customer ID and Product Category, and calculate the total profit
 customer_preferences = df.groupby(['Customer ID', 'Category'])['Profit'].sum().reset_index()
@@ -35,26 +40,28 @@ top_customers['Total Profit'].plot(kind='pie', autopct='%1.1f%%', startangle=90,
 ax1.set_ylabel('')  # Remove the y-axis label
 ax1.set_title('Top 10 Customers by Total Profit')
 
-# Display the pie chart using Streamlit's st.pyplot()
-st.pyplot(fig1)
+# Display the pie chart using Streamlit's st.pyplot() in the second column
+with col2:
+    st.pyplot(fig1)
+
+# Second row: Product Selection Scatter Plot, Marketing Effectiveness Line Chart, and Sales Quantity and Profit by Category Chart
+col3, col4, col5 = st.beta_columns(3)
 
 # Selecting relevant columns for product analysis
 product_data = df[['Product ID', 'Product Name', 'Sales', 'Profit']]
 
-# Grouping data by Product ID and calculating total sales quantity and profit
-product_summary = product_data.groupby(['Product ID', 'Product Name']).agg({'Sales': 'sum', 'Profit': 'sum'}).reset_index()
-
 # Plotting the scatter plot for product selection
 fig2, ax2 = plt.subplots(figsize=(6, 4))
-ax2.scatter(product_summary['Sales'], product_summary['Profit'], alpha=0.5)
+ax2.scatter(product_data['Sales'], product_data['Profit'], alpha=0.5)
 ax2.set_xlabel('Sales')
 ax2.set_ylabel('Profit')
 ax2.set_title('Product Selection: Sales vs. Profit')  # Naming the graph
 ax2.grid(True)
 plt.tight_layout()
 
-# Displaying the scatter plot for product selection using Streamlit
-st.pyplot(fig2)
+# Displaying the scatter plot for product selection in the first column of the second row
+with col3:
+    st.pyplot(fig2)
 
 # Group the data by Order Date and calculate the total profit
 marketing_data = df.groupby('Order Date')['Profit'].sum().reset_index()
@@ -77,11 +84,12 @@ trendline = go.Scatter(x=marketing_data['Order Date'],
                        name='Trend Line')
 fig3.add_trace(trendline)
 
-# Display the interactive line chart for marketing effectiveness using Plotly
-st.plotly_chart(fig3, use_container_width=True)
+# Display the interactive line chart for marketing effectiveness using Plotly in the second column of the second row
+with col4:
+    st.plotly_chart(fig3, use_container_width=True)
 
 # Group the data by Category and calculate the total sales quantity and profit
-sales_profit_by_category = df.groupby('Category').agg({'Quantity': 'sum', 'Profit': 'sum'}).reset_index()
+sales_profit_by_category = df.groupby('Category').agg({'Sales': 'sum', 'Profit': 'sum'}).reset_index()
 
 # Sort categories by total profit in descending order
 sorted_categories = sales_profit_by_category.sort_values(by='Profit', ascending=False)
@@ -97,10 +105,11 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
     ),
     tooltip=['Category', 'Profit']
 ).properties(
-    width=500,
-    height=300,
+    width=300,
+    height=250,
     title='Sales Quantity and Profit by Category'
 ).interactive()
 
-# Display the chart for sales quantity and profit by category using Streamlit
-st.altair_chart(chart, use_container_width=True)
+# Display the chart for sales quantity and profit by category using Streamlit in the third column of the second row
+with col5:
+    st.altair_chart(chart, use_container_width=True)
