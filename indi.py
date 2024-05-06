@@ -12,12 +12,12 @@ df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 st.set_page_config(layout="wide")
 
 # First row: Profit vs. Sales Line Chart and Top 10 Customers by Total Profit Pie Chart
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([2, 1])
 
 # Plotting the scatter plot for Profit vs. Sales
 with col1:
     st.title('Profit vs. Sales')
-    st.line_chart(df[['Sales', 'Profit']], width=300, height=200)
+    st.line_chart(df[['Sales', 'Profit']], width=600, height=400)
 
 # Group the data by Customer ID and Product Category, and calculate the total profit
 customer_preferences = df.groupby(['Customer ID', 'Category'])['Profit'].sum().reset_index()
@@ -35,7 +35,7 @@ sorted_customers = pivot_table.sort_values(by='Total Profit', ascending=False)
 top_customers = sorted_customers.head(10)
 
 # Plotting the pie chart for top 10 customers
-fig1, ax1 = plt.subplots(figsize=(4, 4))
+fig1, ax1 = plt.subplots(figsize=(6, 6))
 top_customers['Total Profit'].plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=ax1)
 ax1.set_ylabel('')  # Remove the y-axis label
 ax1.set_title('Top 10 Customers by Total Profit')
@@ -44,14 +44,14 @@ ax1.set_title('Top 10 Customers by Total Profit')
 with col2:
     st.pyplot(fig1)
 
-# Second row: Product Selection Scatter Plot, Marketing Effectiveness Line Chart, and Sales Quantity and Profit by Category Chart
-col3, col4, col5 = st.columns(3)
+# Second row: Product Selection Scatter Plot and Marketing Effectiveness Line Chart
+col3, col4 = st.columns([2, 1])
 
 # Selecting relevant columns for product analysis
 product_data = df[['Product ID', 'Product Name', 'Sales', 'Profit']]
 
 # Plotting the scatter plot for product selection
-fig2, ax2 = plt.subplots(figsize=(4, 3))
+fig2, ax2 = plt.subplots(figsize=(6, 4))
 ax2.scatter(product_data['Sales'], product_data['Profit'], alpha=0.5)
 ax2.set_xlabel('Sales')
 ax2.set_ylabel('Profit')
@@ -88,6 +88,9 @@ fig3.add_trace(trendline)
 with col4:
     st.plotly_chart(fig3, use_container_width=True)
 
+# Third row: Sales Quantity and Profit by Category Chart
+col5, _ = st.columns([2, 1])
+
 # Group the data by Category and calculate the total sales quantity and profit
 sales_profit_by_category = df.groupby('Category').agg({'Sales': 'sum', 'Profit': 'sum'}).reset_index()
 
@@ -105,11 +108,11 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
     ),
     tooltip=['Category', 'Profit']
 ).properties(
-    width=200,
-    height=150,
+    width=600,
+    height=400,
     title='Sales Quantity and Profit by Category'
 ).interactive()
 
-# Display the chart for sales quantity and profit by category using Streamlit in the third column of the second row
+# Display the chart for sales quantity and profit by category using Streamlit in the third column of the third row
 with col5:
     st.altair_chart(chart, use_container_width=True)
