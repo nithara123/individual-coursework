@@ -30,9 +30,8 @@ st.markdown(
         margin-bottom: 15px;
     }
     .graph-frame {
-        border: 1px solid #ccc;
-        border-radius: 10px;
-        padding: 20px;
+        border: none;  /* Remove border */
+        padding: 0;  /* Remove padding */
         margin-bottom: 30px;
     }
     </style>
