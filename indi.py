@@ -24,11 +24,6 @@ st.markdown(
         border-radius: 10px;
         margin-bottom: 30px;
     }
-    .topic {
-        font-size: 20px;
-        font-weight: bold;
-        margin-bottom: 15px;
-    }
     .graph-frame {
         border: none;  /* Remove border */
         padding: 0;  /* Remove padding */
@@ -44,9 +39,6 @@ st.markdown('<div class="header">Sales Analytics Dashboard</div>', unsafe_allow_
 
 # First row: Profit vs. Sales Line Chart and Top 10 Customers by Total Profit Pie Chart
 col1, col2 = st.columns([1, 1])
-
-# Display the title of the first row
-col1.markdown('<h2>Profit vs. Sales</h2>', unsafe_allow_html=True)
 
 # Plotting the scatter plot for Profit vs. Sales
 with col1:
@@ -69,9 +61,6 @@ sorted_customers = pivot_table.sort_values(by='Total Profit', ascending=False)
 # Select top 10 customers based on total profit
 top_customers = sorted_customers.head(10)
 
-# Display the title of the second row
-col2.markdown('<h2>Top 10 Customers by Total Profit</h2>', unsafe_allow_html=True)
-
 # Plotting the pie chart for top 10 customers
 fig1, ax1 = plt.subplots(figsize=(4, 4))  # Adjusted figsize
 top_customers['Total Profit'].plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=ax1)
@@ -86,9 +75,6 @@ with col2:
 
 # Second row: Product Selection Scatter Plot and Marketing Effectiveness Line Chart
 col3, col4 = st.columns([1, 1])
-
-# Display the title of the third row
-col3.markdown('<h2>Product Selection: Sales vs. Profit</h2>', unsafe_allow_html=True)
 
 # Selecting relevant columns for product analysis
 product_data = df[['Product ID', 'Product Name', 'Sales', 'Profit']]
@@ -107,9 +93,6 @@ with col3:
     st.markdown('<div class="graph-frame">', unsafe_allow_html=True)
     st.pyplot(fig2)
     st.markdown('</div>', unsafe_allow_html=True)
-
-# Display the title of the fourth row
-col4.markdown('<h2>Improvement in Marketing Effectiveness Over Time</h2>', unsafe_allow_html=True)
 
 # Group the data by Order Date and calculate the total profit
 marketing_data = df.groupby('Order Date')['Profit'].sum().reset_index()
@@ -139,9 +122,6 @@ with col4:
 # Third row: Sales Quantity and Profit by Category Chart
 col5, _ = st.columns([1, 1])
 
-# Display the title of the fifth row
-col5.markdown('<h2>Sales Quantity and Profit by Category</h2>', unsafe_allow_html=True)
-
 # Group the data by Category and calculate the total sales quantity and profit
 sales_profit_by_category = df.groupby('Category').agg({'Sales': 'sum', 'Profit': 'sum'}).reset_index()
 
@@ -164,6 +144,4 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
     title='Sales Quantity and Profit by Category'
 ).interactive()
 
-# Display the chart for sales quantity and profit by category using Streamlit in the third column of the third row
-with col5:
-    st.altair_chart(chart, use_container_width=True)
+# Display the chart for sales quantity and profit
