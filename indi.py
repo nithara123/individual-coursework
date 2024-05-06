@@ -38,14 +38,14 @@ st.markdown(
 st.markdown('<div class="header">Sales Analytics Dashboard</div>', unsafe_allow_html=True)
 
 # First row: Profit vs. Sales Line Chart and Top 10 Customers by Total Profit Pie Chart
-col1, col2 = st.columns([2, 1])
+col1, col2 = st.columns([1, 1])
 
 # Display the topic of the first row
 col1.markdown('<div class="topic">Profit vs. Sales</div>', unsafe_allow_html=True)
 
 # Plotting the scatter plot for Profit vs. Sales
 with col1:
-    st.line_chart(df[['Sales', 'Profit']], width=800, height=500)
+    st.line_chart(df[['Sales', 'Profit']], width=400, height=300)
 
 # Group the data by Customer ID and Product Category, and calculate the total profit
 customer_preferences = df.groupby(['Customer ID', 'Category'])['Profit'].sum().reset_index()
@@ -66,7 +66,7 @@ top_customers = sorted_customers.head(10)
 col2.markdown('<div class="topic">Top 10 Customers by Total Profit</div>', unsafe_allow_html=True)
 
 # Plotting the pie chart for top 10 customers
-fig1, ax1 = plt.subplots(figsize=(6, 6))
+fig1, ax1 = plt.subplots(figsize=(4, 4))  # Adjusted figsize
 top_customers['Total Profit'].plot(kind='pie', autopct='%1.1f%%', startangle=90, ax=ax1)
 ax1.set_ylabel('')  # Remove the y-axis label
 ax1.set_title('Top 10 Customers by Total Profit')
@@ -76,7 +76,7 @@ with col2:
     st.pyplot(fig1)
 
 # Second row: Product Selection Scatter Plot and Marketing Effectiveness Line Chart
-col3, col4 = st.columns([2, 1])
+col3, col4 = st.columns([1, 1])
 
 # Display the topic of the second row
 col3.markdown('<div class="topic">Product Selection: Sales vs. Profit</div>', unsafe_allow_html=True)
@@ -85,7 +85,7 @@ col3.markdown('<div class="topic">Product Selection: Sales vs. Profit</div>', un
 product_data = df[['Product ID', 'Product Name', 'Sales', 'Profit']]
 
 # Plotting the scatter plot for product selection
-fig2, ax2 = plt.subplots(figsize=(6, 4))
+fig2, ax2 = plt.subplots(figsize=(4, 3))  # Adjusted figsize
 ax2.scatter(product_data['Sales'], product_data['Profit'], alpha=0.5)
 ax2.set_xlabel('Sales')
 ax2.set_ylabel('Profit')
@@ -126,7 +126,7 @@ with col4:
     st.plotly_chart(fig3, use_container_width=True)
 
 # Third row: Sales Quantity and Profit by Category Chart
-col5, _ = st.columns([2, 1])
+col5, _ = st.columns([1, 1])
 
 # Display the topic of the third row
 col5.markdown('<div class="topic">Sales Quantity and Profit by Category</div>', unsafe_allow_html=True)
@@ -148,8 +148,8 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
     ),
     tooltip=['Category', 'Profit']
 ).properties(
-    width=800,
-    height=500,
+    width=400,  # Adjusted width
+    height=300,  # Adjusted height
     title='Sales Quantity and Profit by Category'
 ).interactive()
 
