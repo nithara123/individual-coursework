@@ -29,11 +29,11 @@ st.markdown(
         font-weight: bold;
         margin-bottom: 15px;
     }
-    .frame {
-        border: 1px solid #d3d3d3;
+    .graph-frame {
+        border: 1px solid #ccc;
         border-radius: 10px;
-        padding: 15px;
-        margin-bottom: 20px;
+        padding: 20px;
+        margin-bottom: 30px;
     }
     </style>
     """,
@@ -44,15 +44,15 @@ st.markdown(
 st.markdown('<div class="header">Sales Analytics Dashboard</div>', unsafe_allow_html=True)
 
 # First row: Profit vs. Sales Line Chart and Top 10 Customers by Total Profit Pie Chart
-col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns([2, 1])
 
 # Display the topic of the first row
 col1.markdown('<div class="topic">Profit vs. Sales</div>', unsafe_allow_html=True)
 
 # Plotting the scatter plot for Profit vs. Sales
 with col1:
-    st.markdown('<div class="frame">', unsafe_allow_html=True)
-    st.line_chart(df[['Sales', 'Profit']], width=400, height=300)
+    st.markdown('<div class="graph-frame">', unsafe_allow_html=True)
+    st.line_chart(df[['Sales', 'Profit']], width=600, height=400)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Group the data by Customer ID and Product Category, and calculate the total profit
@@ -81,12 +81,12 @@ ax1.set_title('Top 10 Customers by Total Profit')
 
 # Display the pie chart using Streamlit's st.pyplot() in the second column
 with col2:
-    st.markdown('<div class="frame">', unsafe_allow_html=True)
+    st.markdown('<div class="graph-frame">', unsafe_allow_html=True)
     st.pyplot(fig1)
     st.markdown('</div>', unsafe_allow_html=True)
 
 # Second row: Product Selection Scatter Plot and Marketing Effectiveness Line Chart
-col3, col4 = st.columns([1, 1])
+col3, col4 = st.columns([2, 1])
 
 # Display the topic of the second row
 col3.markdown('<div class="topic">Product Selection: Sales vs. Profit</div>', unsafe_allow_html=True)
@@ -105,7 +105,7 @@ plt.tight_layout()
 
 # Displaying the scatter plot for product selection in the first column of the second row
 with col3:
-    st.markdown('<div class="frame">', unsafe_allow_html=True)
+    st.markdown('<div class="graph-frame">', unsafe_allow_html=True)
     st.pyplot(fig2)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -135,7 +135,7 @@ fig3.add_trace(trendline)
 
 # Display the interactive line chart for marketing effectiveness using Plotly in the second column of the second row
 with col4:
-    st.markdown('<div class="frame">', unsafe_allow_html=True)
+    st.markdown('<div class="graph-frame">', unsafe_allow_html=True)
     st.plotly_chart(fig3, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
@@ -169,6 +169,6 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
 
 # Display the chart for sales quantity and profit by category using Streamlit in the third column of the third row
 with col5:
-    st.markdown('<div class="frame">', unsafe_allow_html=True)
+    st.markdown('<div class="graph-frame">', unsafe_allow_html=True)
     st.altair_chart(chart, use_container_width=True)
     st.markdown('</div>', unsafe_allow_html=True)
