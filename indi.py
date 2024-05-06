@@ -4,9 +4,6 @@ import pandas as pd
 # Load the CSV file into a DataFrame with 'latin1' encoding
 df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 
-# Plotting the bar chart using Streamlit's st.bar_chart()
-st.bar_chart(profit_by_category.set_index('Category')['Profit'], use_container_width=True)  # Adjusts chart width
-
 # Calculate profit by category
 profit_by_category = df.groupby('Category')['Profit'].sum().reset_index()
 
@@ -19,14 +16,14 @@ st.title('Profit by Category')
 # Display the bar chart with rotated x-axis labels for better readability
 st.write('Bar Chart: Profit by Category')
 
+# Plotting the scatter plot using Streamlit's st.line_chart()
+st.line_chart(df[['Sales', 'Profit']])
+
 # Display the scatter plot title
 st.title('Profit vs. Sales')
 
 # Display the scatter plot
 st.write('Line Chart: Profit vs. Sales')
-
-# Plotting the scatter plot using Streamlit's st.line_chart()
-st.line_chart(df[['Sales', 'Profit']])
 
 
 #UNDERSTANDING ABOUT THE CUTOMER PREFERENCES
