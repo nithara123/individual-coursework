@@ -81,4 +81,26 @@ fig3.add_trace(trendline)
 st.plotly_chart(fig3, use_container_width=True)
 
 # Group the data by Category and calculate the total sales quantity and profit
-sales_profit_by_category = df.groupby('Category').agg({'Quantity': 'sum'
+sales_profit_by_category = df.groupby('Category').agg({'Quantity': 'sum', 'Profit': 'sum'}).reset_index()
+
+# Sort categories by total profit in descending order
+sorted_categories = sales_profit_by_category.sort_values(by='Profit', ascending=False)
+
+# Plotting the chart for sales quantity and profit by category using Altair
+chart = alt.Chart(sorted_categories).mark_bar().encode(
+    x='Category',
+    y='Profit',
+    color=alt.condition(
+        alt.datum.Profit > 0,
+        alt.value('green'),  # Color for positive profits
+        alt.value('red')  # Color for negative profits
+    ),
+    tooltip=['Category', 'Profit']
+).properties(
+    width=400,
+    height=250,
+    title='Sales Quantity and Profit by Category'
+).interactive()
+
+# Display the chart for sales quantity and profit by category using Streamlit
+st.altair_chart(chart, use_container_width=True)
