@@ -149,3 +149,4 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
 
 # Display the chart using Streamlit
 st.write(chart)
+
