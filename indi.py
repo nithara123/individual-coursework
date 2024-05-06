@@ -17,7 +17,7 @@ col1, col2 = st.beta_columns(2)
 # Plotting the scatter plot for Profit vs. Sales
 with col1:
     st.title('Profit vs. Sales')
-    st.line_chart(df[['Sales', 'Profit']], width=400, height=300)
+    st.line_chart(df[['Sales', 'Profit']], width=300, height=200)
 
 # Group the data by Customer ID and Product Category, and calculate the total profit
 customer_preferences = df.groupby(['Customer ID', 'Category'])['Profit'].sum().reset_index()
@@ -105,8 +105,8 @@ chart = alt.Chart(sorted_categories).mark_bar().encode(
     ),
     tooltip=['Category', 'Profit']
 ).properties(
-    width=300,
-    height=250,
+    width=200,
+    height=150,
     title='Sales Quantity and Profit by Category'
 ).interactive()
 
