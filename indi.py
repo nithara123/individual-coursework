@@ -12,7 +12,7 @@ df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 st.set_page_config(layout="wide")
 
 # First row: Profit vs. Sales Line Chart and Top 10 Customers by Total Profit Pie Chart
-col1, col2 = st.beta_columns(2)
+col1, col2 = st.columns(2)
 
 # Plotting the scatter plot for Profit vs. Sales
 with col1:
@@ -45,7 +45,7 @@ with col2:
     st.pyplot(fig1)
 
 # Second row: Product Selection Scatter Plot, Marketing Effectiveness Line Chart, and Sales Quantity and Profit by Category Chart
-col3, col4, col5 = st.beta_columns(3)
+col3, col4, col5 = st.columns(3)
 
 # Selecting relevant columns for product analysis
 product_data = df[['Product ID', 'Product Name', 'Sales', 'Profit']]
