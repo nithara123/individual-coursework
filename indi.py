@@ -8,12 +8,11 @@ df = pd.read_csv('Global Superstore lite (1).csv', encoding='latin1')
 # Display the scatter plot title
 st.title('Profit vs. Sales')
 
-# Plotting the scatter plot using Streamlit's st.line_chart()
-st.line_chart(df[['Sales', 'Profit']])
-
 # Display the scatter plot
 st.write('Line Chart: Profit vs. Sales')
 
+# Plotting the scatter plot using Streamlit's st.line_chart()
+st.line_chart(df[['Sales', 'Profit']])
 
 
 #UNDERSTANDING ABOUT THE CUTOMER PREFERENCES
