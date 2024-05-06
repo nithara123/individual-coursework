@@ -1,6 +1,4 @@
 pandas
 matplotlib
-plotly.express
-plotly.graph_objects
 streamlit
 altair
