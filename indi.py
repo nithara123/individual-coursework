@@ -40,7 +40,7 @@ st.markdown(
 )
 
 # Display the header
-st.markdown('<div class="header">Sales Analytics Dashboard</div>', unsafe_allow_html=True)
+st.markdown('<div class="header">Analytics Dashboard</div>', unsafe_allow_html=True)
 
 # First row: Profit vs. Sales Line Chart and Top 10 Customers by Total Profit Pie Chart
 col1, col2 = st.columns([1, 1])
