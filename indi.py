@@ -4,7 +4,6 @@ import matplotlib.pyplot as plt
 import plotly.express as px
 import plotly.graph_objects as go
 import altair as alt
-pip install plotly
 
 
 # Load your dataset into a pandas DataFrame (replace 'your_dataset.csv' with your actual CSV file)
