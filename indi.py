@@ -100,9 +100,6 @@ try:
 except Exception as e:
     st.error(f"Error loading dataset: {e}")
 
-# Sidebar menu options
-st.sidebar.header('Product Performance')
-
 # Line graph - Sales Quantity Over Time
 df['Order Date'] = pd.to_datetime(df['Order Date'])
 sales_quantity_over_time = df.groupby(pd.Grouper(key='Order Date', freq='M')).sum()['Sales Quantity']
