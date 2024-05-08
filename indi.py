@@ -142,3 +142,80 @@ elif selected_option == "Bubble Chart - Profit vs Quantity":
         st.pyplot(fig_bubble)
     except Exception as e:
         st.error(f"Error creating bubble chart: {e}")
+
+
+#CUSTOMER ANALYSIS
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Custom CSS to style the sidebar
+sidebar_style = """
+    background-color: lightblue;
+    padding: 10px;
+    border-radius: 10px;
+"""
+
+# Apply the custom CSS to the sidebar
+st.markdown(
+    f"""
+    <style>
+    .sidebar .sidebar-content {{
+        {sidebar_style}
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Load your dataset into a pandas DataFrame with error handling and proper encoding
+try:
+    df = pd.read_csv('https://github.com/nithara123/individual-coursework/raw/main/cleaned_dataset.csv', encoding='latin-1')
+except Exception as e:
+    st.error(f"Error loading dataset: {e}")
+
+# Sidebar menu options for customer analysis
+selected_option = st.sidebar.selectbox("Customer Analysis", ["Pie Chart - Customer Segmentation", "Bar Graph - Sales by Customer Segment", "Line Graph - Sales Over Time by Customer Segment"])
+
+# Display selected visualization based on user choice
+if selected_option == "Pie Chart - Customer Segmentation":
+    st.subheader('Pie Chart - Customer Segmentation')
+    try:
+        customer_segmentation = df['Segment'].value_counts()
+        fig_pie, ax = plt.subplots()
+        ax.pie(customer_segmentation, labels=customer_segmentation.index, autopct='%1.1f%%', startangle=90)
+        ax.axis('equal')
+        plt.title('Pie Chart - Customer Segmentation')
+        st.pyplot(fig_pie)
+    except Exception as e:
+        st.error(f"Error creating pie chart: {e}")
+
+elif selected_option == "Bar Graph - Sales by Customer Segment":
+    st.subheader('Bar Graph - Sales by Customer Segment')
+    try:
+        sales_by_segment = df.groupby('Segment')['Sales'].sum()
+        fig_bar, ax = plt.subplots(figsize=(8, 6))
+        sales_by_segment.plot(kind='bar')
+        plt.xlabel('Customer Segment')
+        plt.ylabel('Sales')
+        plt.title('Bar Graph - Sales by Customer Segment')
+        st.pyplot(fig_bar)
+    except Exception as e:
+        st.error(f"Error creating bar graph: {e}")
+
+elif selected_option == "Line Graph - Sales Over Time by Customer Segment":
+    st.subheader('Line Graph - Sales Over Time by Customer Segment')
+    try:
+        df['Order Date'] = pd.to_datetime(df['Order Date'])
+        sales_over_time_segment = df.groupby(['Segment', pd.Grouper(key='Order Date', freq='M')]).sum()['Sales']
+        fig_line, ax = plt.subplots(figsize=(10, 6))
+        for segment, sales_data in sales_over_time_segment.groupby('Segment'):
+            ax.plot(sales_data.index, sales_data.values, label=segment)
+        plt.xlabel('Order Date')
+        plt.ylabel('Sales')
+        plt.title('Line Graph - Sales Over Time by Customer Segment')
+        plt.legend()
+        st.pyplot(fig_line)
+    except Exception as e:
+        st.error(f"Error creating line graph: {e}")
