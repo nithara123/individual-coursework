@@ -28,7 +28,7 @@ except Exception as e:
     st.error(f"Error loading dataset: {e}")
 
 # Sidebar menu options
-selected_option = st.sidebar.selectbox("Select Visualization", ["Sales by Category", "Sales Over Time", "Sales Quantity Distribution"])
+selected_option = st.sidebar.selectbox("Sales Overview", ["Sales by Category", "Sales Over Time", "Sales Quantity Distribution"])
 
 # Display selected visualization based on user choice
 if selected_option == "Sales by Category":
@@ -69,6 +69,7 @@ elif selected_option == "Sales Quantity Distribution":
         st.pyplot(fig_hist)
     except Exception as e:
         st.error(f"Error creating histogram: {e}")
+
 
 #PRODUCT PERFOMANCE
 import streamlit as st
