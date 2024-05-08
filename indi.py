@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 # Load your dataset into a pandas DataFrame with error handling and proper encoding
 try:
     df = pd.read_csv('https://github.com/nithara123/individual-coursework/raw/main/cleaned_dataset.csv', encoding='latin-1')
-    st.write("Initial data:")
-    st.write(df.head())
 except Exception as e:
     st.error(f"Error loading dataset: {e}")
 
