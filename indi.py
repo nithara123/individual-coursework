@@ -102,7 +102,7 @@ except Exception as e:
     st.error(f"Error loading dataset: {e}")
 
 # Sidebar menu options
-selected_option = st.sidebar.selectbox("Product Performance", ["Line Graph - Sales vs. Profit", "Scatter Plot - Discount vs. Sales", "Bubble Chart - Sales vs. Discount vs. Profit"])
+selected_option = st.sidebar.selectbox("Product Performance", ["Line Graph - Sales vs. Profit", "Scatter Plot - Discount vs. Sales", "Bubble Chart - Profit vs. Discount"])
 
 # Display selected visualization based on user choice
 if selected_option == "Line Graph - Sales vs. Profit":
@@ -123,11 +123,11 @@ elif selected_option == "Scatter Plot - Discount vs. Sales":
     ax.set_title('Scatter Plot - Discount vs. Sales')
     st.pyplot(fig_scatter)
 
-elif selected_option == "Bubble Chart - Sales vs. Discount vs. Profit":
-    st.subheader('Bubble Chart - Sales vs. Discount vs. Profit')
-    fig_bubble, ax = plt.subplots(figsize=(10, 6))
-    sns.scatterplot(x='Sales', y='Discount', size='Profit', data=df, alpha=0.5, ax=ax)
-    ax.set_xlabel('Sales')
+elif selected_option == "Bubble Chart - Profit vs. Discount":
+    st.subheader('Bubble Chart - Profit vs. Discount')
+    fig_bubble, ax = plt.subplots(figsize=(10, 8))
+    sns.scatterplot(x='Profit', y='Discount', size='Sales', data=df, alpha=0.5, ax=ax)
+    ax.set_xlabel('Profit')
     ax.set_ylabel('Discount')
-    ax.set_title('Bubble Chart - Sales vs. Discount vs. Profit')
+    ax.set_title('Bubble Chart - Profit vs. Discount')
     st.pyplot(fig_bubble)
