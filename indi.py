@@ -6,7 +6,7 @@ import plotly.graph_objects as go
 import altair as alt
 
 # Load your dataset into a pandas DataFrame (replace 'your_dataset.csv' with your actual CSV file)
-df = pd.read_csv('https://raw.githubusercontent.com/nithara123/individual-coursework/main/cleaned_dataset.csv')
+df = pd.read_csv('https://github.com/nithara123/individual-coursework/blob/main/cleaned_dataset.csv')
 
 # Display the DataFrame
 st.write("Initial data:")
