@@ -103,13 +103,13 @@ except Exception as e:
 
 # Sidebar menu option for the bubble chart
 st.sidebar.subheader("Product Performance")
-st.sidebar.write("Bubble Chart - Discount vs Profit")
+st.sidebar.write("Scatterplot - Discount vs Profit")
 
-# Display the bubble chart
-st.subheader('Bubble Chart - Discount vs Profit')
-fig_bubble, ax = plt.subplots(figsize=(10, 8))
-sns.scatterplot(x='Profit', y='Discount', size='Sales Quantity', data=df, alpha=0.5, ax=ax)
+# Display the scatterplot
+st.subheader('Scatterplot - Discount vs Profit')
+fig_scatter, ax = plt.subplots(figsize=(10, 8))
+sns.scatterplot(x='Profit', y='Discount', data=df, alpha=0.5, ax=ax)
 ax.set_xlabel('Profit')
 ax.set_ylabel('Discount')
-ax.set_title('Bubble Chart - Discount vs Profit')
-st.pyplot(fig_bubble)
+ax.set_title('Scatterplot - Discount vs Profit')
+st.pyplot(fig_scatter)
