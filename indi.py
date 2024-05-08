@@ -2,6 +2,25 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# Custom CSS to style the sidebar
+sidebar_style = """
+    background-color: lightblue;
+    padding: 10px;
+    border-radius: 10px;
+"""
+
+# Apply the custom CSS to the sidebar
+st.markdown(
+    f"""
+    <style>
+    .sidebar .sidebar-content {{
+        {sidebar_style}
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
 # Load your dataset into a pandas DataFrame with error handling and proper encoding
 try:
     df = pd.read_csv('https://github.com/nithara123/individual-coursework/raw/main/cleaned_dataset.csv', encoding='latin-1')
@@ -50,3 +69,4 @@ elif selected_option == "Sales Quantity Distribution":
         st.pyplot(fig_hist)
     except Exception as e:
         st.error(f"Error creating histogram: {e}")
+
