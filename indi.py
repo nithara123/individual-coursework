@@ -1,10 +1,15 @@
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
-import plotly.express as px
-import plotly.graph_objects as go
-import altair as alt
 
+# Check if Plotly is installed
+try:
+    import plotly.express as px
+    import plotly.graph_objects as go
+except ModuleNotFoundError:
+    st.error("Plotly is not installed. Please install it using 'pip install plotly'.")
+
+import altair as alt
 
 # Load your dataset into a pandas DataFrame (replace 'your_dataset.csv' with your actual CSV file)
 df = pd.read_csv('https://github.com/nithara123/individual-coursework/blob/main/cleaned_dataset.csv')
@@ -44,3 +49,4 @@ plt.xlabel('Quantity')
 plt.ylabel('Frequency')
 plt.title('Histogram - Sales Quantity Distribution')
 st.pyplot(fig_hist)
+
