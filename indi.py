@@ -5,32 +5,18 @@ import seaborn as sns
 
 # Custom CSS to style the sidebar
 sidebar_style = """
-    .sidebar .sidebar-content {
-        background-color: lightblue;
-        padding: 10px;
-        border-radius: 10px;
-    }
-    .sidebar .sidebar-content .sidebar-item a {
-        background-color: #ADD8E6;
-        color: black;
-        border-radius: 5px;
-        padding: 5px 10px;
-        margin-bottom: 5px;
-    }
-    .sidebar .sidebar-content .sidebar-item a:hover {
-        background-color: #87CEEB;
-    }
-    .sidebar .sidebar-content .sidebar-item a.selected {
-        background-color: #4169E1;
-        color: white;
-    }
+    background-color: lightblue;
+    padding: 10px;
+    border-radius: 10px;
 """
 
 # Apply the custom CSS to the sidebar
 st.markdown(
     f"""
     <style>
-    {sidebar_style}
+    .sidebar .sidebar-content {{
+        {sidebar_style}
+    }}
     </style>
     """,
     unsafe_allow_html=True
@@ -86,11 +72,9 @@ elif selected_option == "Sales Quantity Distribution":
         st.error(f"Error creating histogram: {e}")
 
 # PRODUCT PERFORMANCE
-# Sidebar menu options
-selected_option_prod = st.sidebar.selectbox("Product Performance", ["Line Chart - Sales Quantity Over Time", "Discount vs Profit", "Bubble Chart - Profit vs Quantity"])
+selected_option_perf = st.sidebar.selectbox("Product Performance", ["Line Chart - Sales Quantity Over Time", "Discount vs Profit", "Bubble Chart - Profit vs Quantity"])
 
-# Display selected visualization based on user choice
-if selected_option_prod == "Line Chart - Sales Quantity Over Time":
+if selected_option_perf == "Line Chart - Sales Quantity Over Time":
     st.subheader('Line Chart - Sales Quantity Over Time')
     try:
         df['Order Date'] = pd.to_datetime(df['Order Date'])
@@ -104,7 +88,7 @@ if selected_option_prod == "Line Chart - Sales Quantity Over Time":
     except Exception as e:
         st.error(f"Error creating line chart: {e}")
 
-elif selected_option_prod == "Discount vs Profit":
+elif selected_option_perf == "Discount vs Profit":
     st.subheader('Discount vs Profit')
     try:
         fig_scatter, ax = plt.subplots(figsize=(10, 6))
@@ -116,7 +100,7 @@ elif selected_option_prod == "Discount vs Profit":
     except Exception as e:
         st.error(f"Error creating scatterplot: {e}")
 
-elif selected_option_prod == "Bubble Chart - Profit vs Quantity":
+elif selected_option_perf == "Bubble Chart - Profit vs Quantity":
     st.subheader('Bubble Chart - Profit vs Quantity')
     try:
         fig_bubble, ax = plt.subplots(figsize=(10, 8))
@@ -128,12 +112,9 @@ elif selected_option_prod == "Bubble Chart - Profit vs Quantity":
     except Exception as e:
         st.error(f"Error creating bubble chart: {e}")
 
-
 # GEOGRAPHICAL INSIGHTS
-# Sidebar menu options for geographical insights
 selected_option_geo = st.sidebar.selectbox("Geographical Insights", ["Bar Graph - Sales by Region", "Line Graph - Sales Over Time by Region", "Heatmap - Sales by Category and Region"])
 
-# Display selected visualization based on user choice
 if selected_option_geo == "Bar Graph - Sales by Region":
     st.subheader('Bar Graph - Sales by Region')
     try:
@@ -175,10 +156,8 @@ elif selected_option_geo == "Heatmap - Sales by Category and Region":
         st.error(f"Error creating heatmap: {e}")
 
 # CUSTOMER ANALYSIS
-# Sidebar menu options for customer analysis
 selected_option_cust = st.sidebar.selectbox("Customer Analysis", ["Pie Chart - Customer Segmentation", "Bar Graph - Sales by Customer Segment"])
 
-# Display selected visualization based on user choice
 if selected_option_cust == "Pie Chart - Customer Segmentation":
     st.subheader('Pie Chart - Customer Segmentation')
     try:
@@ -204,13 +183,18 @@ elif selected_option_cust == "Bar Graph - Sales by Customer Segment":
     except Exception as e:
         st.error(f"Error creating bar graph: {e}")
 
-# Filter by Date
-st.sidebar.subheader("Filter by Date")
-start_date = st.sidebar.date_input("Start Date")
-end_date = st.sidebar.date_input("End Date")
+# Filter by Category and Region
+st.sidebar.header("Filter by Category and Region")
+selected_category = st.sidebar.selectbox("Select Category", df['Category'].unique())
+selected_region = st.sidebar.selectbox("Select Region", df['Region'].unique())
 
-# Filter the data based on selected date range
-filtered_df = df[(df['Order Date'] >= start_date) & (df['Order Date'] <= end_date)]
+# Date Range Filter
+st.sidebar.subheader("Date Range Filter")
+start_date = st.sidebar.date_input("Start Date", min(df['Order Date']), max(df['Order Date']), min_value=min(df['Order Date']), max_value=max(df['Order Date']))
+end_date = st.sidebar.date_input("End Date", max(df['Order Date']), min(df['Order Date']), min_value=min(df['Order Date']), max_value=max(df['Order Date']))
+
+# Apply filters to the dataframe
+filtered_df = df[(df['Category'] == selected_category) & (df['Region'] == selected_region) & (df['Order Date'] >= start_date) & (df['Order Date'] <= end_date)]
 
 # Display the filtered data
 st.write("Filtered Data:")
