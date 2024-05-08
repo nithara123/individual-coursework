@@ -148,6 +148,7 @@ elif selected_option == "Bubble Chart - Profit vs Quantity":
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # Custom CSS to style the sidebar
 sidebar_style = """
@@ -174,31 +175,47 @@ try:
 except Exception as e:
     st.error(f"Error loading dataset: {e}")
 
-# Sidebar menu options for customer analysis
-selected_option = st.sidebar.selectbox("Customer Analysis", ["Pie Chart - Customer Segmentation", "Bar Graph - Sales by Customer Segment"])
+# Sidebar menu options for geographical insights
+selected_option = st.sidebar.selectbox("Geographical Insights", ["Bar Graph - Sales by Region", "Line Graph - Sales Over Time by Region", "Heatmap - Sales by Category and Region"])
 
 # Display selected visualization based on user choice
-if selected_option == "Pie Chart - Customer Segmentation":
-    st.subheader('Pie Chart - Customer Segmentation')
+if selected_option == "Bar Graph - Sales by Region":
+    st.subheader('Bar Graph - Sales by Region')
     try:
-        customer_segmentation = df['Segment'].value_counts()
-        fig_pie, ax = plt.subplots()
-        ax.pie(customer_segmentation, labels=customer_segmentation.index, autopct='%1.1f%%', startangle=90)
-        ax.axis('equal')
-        plt.title('Pie Chart - Customer Segmentation')
-        st.pyplot(fig_pie)
-    except Exception as e:
-        st.error(f"Error creating pie chart: {e}")
-
-elif selected_option == "Bar Graph - Sales by Customer Segment":
-    st.subheader('Bar Graph - Sales by Customer Segment')
-    try:
-        sales_by_segment = df.groupby('Segment')['Sales'].sum()
-        fig_bar, ax = plt.subplots(figsize=(8, 6))
-        sales_by_segment.plot(kind='bar')
-        plt.xlabel('Customer Segment')
+        sales_by_region = df.groupby('Region')['Sales'].sum()
+        fig_bar = plt.figure(figsize=(10, 6))
+        sales_by_region.plot(kind='bar')
+        plt.xlabel('Region')
         plt.ylabel('Sales')
-        plt.title('Bar Graph - Sales by Customer Segment')
+        plt.xticks(rotation=45)
+        plt.title('Bar Graph - Sales by Region')
         st.pyplot(fig_bar)
     except Exception as e:
         st.error(f"Error creating bar graph: {e}")
+
+elif selected_option == "Line Graph - Sales Over Time by Region":
+    st.subheader('Line Graph - Sales Over Time by Region')
+    try:
+        df['Order Date'] = pd.to_datetime(df['Order Date'])
+        sales_over_time_by_region = df.groupby([pd.Grouper(key='Order Date', freq='M'), 'Region']).sum()['Sales'].unstack()
+        fig_line = plt.figure(figsize=(10, 6))
+        sales_over_time_by_region.plot(kind='line', ax=plt.gca())
+        plt.xlabel('Order Date')
+        plt.ylabel('Sales')
+        plt.xticks(rotation=45)
+        plt.title('Line Graph - Sales Over Time by Region')
+        st.pyplot(fig_line)
+    except Exception as e:
+        st.error(f"Error creating line graph: {e}")
+
+elif selected_option == "Heatmap - Sales by Category and Region":
+    st.subheader('Heatmap - Sales by Category and Region')
+    try:
+        sales_by_category_and_region = df.pivot_table(index='Category', columns='Region', values='Sales', aggfunc='sum')
+        fig_heatmap = plt.figure(figsize=(10, 6))
+        sns.heatmap(sales_by_category_and_region, cmap='YlGnBu', annot=True, fmt='.1f')
+        plt.title('Heatmap - Sales by Category and Region')
+        st.pyplot(fig_heatmap)
+    except Exception as e:
+        st.error(f"Error creating heatmap: {e}")
+
