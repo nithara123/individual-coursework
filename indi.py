@@ -188,13 +188,8 @@ st.sidebar.header("Filter by Category and Region")
 selected_category = st.sidebar.selectbox("Select Category", df['Category'].unique())
 selected_region = st.sidebar.selectbox("Select Region", df['Region'].unique())
 
-# Date Range Filter
-st.sidebar.subheader("Date Range Filter")
-start_date = st.sidebar.date_input("Start Date", min(df['Order Date']), max(df['Order Date']), min_value=min(df['Order Date']), max_value=max(df['Order Date']))
-end_date = st.sidebar.date_input("End Date", max(df['Order Date']), min(df['Order Date']), min_value=min(df['Order Date']), max_value=max(df['Order Date']))
-
 # Apply filters to the dataframe
-filtered_df = df[(df['Category'] == selected_category) & (df['Region'] == selected_region) & (df['Order Date'] >= start_date) & (df['Order Date'] <= end_date)]
+filtered_df = df[(df['Category'] == selected_category) & (df['Region'] == selected_region)]
 
 # Display the filtered data
 st.write("Filtered Data:")
