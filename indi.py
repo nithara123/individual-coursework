@@ -102,34 +102,34 @@ except Exception as e:
     st.error(f"Error loading dataset: {e}")
 
 # Sidebar menu options
-selected_option = st.sidebar.selectbox("Product Performance", ["Line Graph - Sales Quantity Over Time", "Scatter Plot - Sales Quantity vs. Profit", "Bubble Chart - Sales Quantity vs. Discount vs. Profit"])
+selected_option = st.sidebar.selectbox("Product Performance", ["Line Graph - Sales Over Time", "Scatter Plot - Sales vs. Profit", "Bubble Chart - Sales vs. Discount vs. Profit"])
 
 # Display selected visualization based on user choice
-if selected_option == "Line Graph - Sales Quantity Over Time":
-    st.subheader('Line Graph - Sales Quantity Over Time')
+if selected_option == "Line Graph - Sales Over Time":
+    st.subheader('Line Graph - Sales Over Time')
     df['Order Date'] = pd.to_datetime(df['Order Date'])
-    sales_quantity_over_time = df.groupby(pd.Grouper(key='Order Date', freq='M')).sum()['Sales Quantity']
+    sales_over_time = df.groupby(pd.Grouper(key='Order Date', freq='M')).sum()['Sales']
     fig_line, ax = plt.subplots(figsize=(10, 6))
-    sns.lineplot(x=sales_quantity_over_time.index, y=sales_quantity_over_time.values, ax=ax)
+    sns.lineplot(x=sales_over_time.index, y=sales_over_time.values, ax=ax)
     ax.set_xlabel('Order Date')
-    ax.set_ylabel('Sales Quantity')
-    ax.set_title('Line Graph - Sales Quantity Over Time')
+    ax.set_ylabel('Sales')
+    ax.set_title('Line Graph - Sales Over Time')
     st.pyplot(fig_line)
 
-elif selected_option == "Scatter Plot - Sales Quantity vs. Profit":
-    st.subheader('Scatter Plot - Sales Quantity vs. Profit')
+elif selected_option == "Scatter Plot - Sales vs. Profit":
+    st.subheader('Scatter Plot - Sales vs. Profit')
     fig_scatter, ax = plt.subplots(figsize=(8, 6))
-    sns.scatterplot(x='Profit', y='Sales Quantity', data=df, alpha=0.5, ax=ax)
+    sns.scatterplot(x='Profit', y='Sales', data=df, alpha=0.5, ax=ax)
     ax.set_xlabel('Profit')
-    ax.set_ylabel('Sales Quantity')
-    ax.set_title('Scatter Plot - Sales Quantity vs. Profit')
+    ax.set_ylabel('Sales')
+    ax.set_title('Scatter Plot - Sales vs. Profit')
     st.pyplot(fig_scatter)
 
-elif selected_option == "Bubble Chart - Sales Quantity vs. Discount vs. Profit":
-    st.subheader('Bubble Chart - Sales Quantity vs. Discount vs. Profit')
+elif selected_option == "Bubble Chart - Sales vs. Discount vs. Profit":
+    st.subheader('Bubble Chart - Sales vs. Discount vs. Profit')
     fig_bubble, ax = plt.subplots(figsize=(10, 6))
-    sns.scatterplot(x='Discount', y='Profit', size='Sales Quantity', data=df, alpha=0.5, ax=ax)
+    sns.scatterplot(x='Discount', y='Profit', size='Sales', data=df, alpha=0.5, ax=ax)
     ax.set_xlabel('Discount')
     ax.set_ylabel('Profit')
-    ax.set_title('Bubble Chart - Sales Quantity vs. Discount vs. Profit')
+    ax.set_title('Bubble Chart - Sales vs. Discount vs. Profit')
     st.pyplot(fig_bubble)
