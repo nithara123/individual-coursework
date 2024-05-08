@@ -102,22 +102,22 @@ except Exception as e:
     st.error(f"Error loading dataset: {e}")
 
 # Sidebar menu options
-selected_option = st.sidebar.selectbox("Product Performance", ["Sales Quantity Over Time", "Discount vs Profit", "Bubble Chart - Profit vs Quantity"])
+selected_option = st.sidebar.selectbox("Product Performance", ["Line Chart - Sales Quantity Over Time", "Discount vs Profit", "Bubble Chart - Profit vs Quantity"])
 
 # Display selected visualization based on user choice
-if selected_option == "Sales Quantity Over Time":
-    st.subheader('Sales Quantity Over Time')
+if selected_option == "Line Chart - Sales Quantity Over Time":
+    st.subheader('Line Chart - Sales Quantity Over Time')
     try:
         df['Order Date'] = pd.to_datetime(df['Order Date'])
-        sales_quantity_over_time = df.groupby(pd.Grouper(key='Order Date', freq='M')).sum()['Sales Quantity']
+        sales_quantity_over_time = df.groupby(pd.Grouper(key='Order Date', freq='M')).sum()['Quantity']
         fig_line, ax = plt.subplots(figsize=(10, 6))
         sns.lineplot(x=sales_quantity_over_time.index, y=sales_quantity_over_time.values, ax=ax)
         ax.set_xlabel('Order Date')
         ax.set_ylabel('Sales Quantity')
-        ax.set_title('Line Graph - Sales Quantity Over Time')
+        ax.set_title('Line Chart - Sales Quantity Over Time')
         st.pyplot(fig_line)
     except Exception as e:
-        st.error(f"Error creating line graph: {e}")
+        st.error(f"Error creating line chart: {e}")
 
 elif selected_option == "Discount vs Profit":
     st.subheader('Discount vs Profit')
