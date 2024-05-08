@@ -38,11 +38,10 @@ selected_region = st.sidebar.selectbox("Select Region", df['Region'].unique())
 
 # Date Range Filter
 st.sidebar.subheader("Date Range Filter")
-start_date = st.sidebar.date_input("Start Date", min(df['Order Date']), max(df['Order Date']), min_value=min(df['Order Date']), max_value=max(df['Order Date']))
-end_date = st.sidebar.date_input("End Date", max(df['Order Date']), min(df['Order Date']), min_value=min(df['Order Date']), max_value=max(df['Order Date']))
+date_range = st.sidebar.slider("Select Date Range", min_value=min(df['Order Date']), max_value=max(df['Order Date']), value=(min(df['Order Date']), max(df['Order Date'])))
 
 # Apply filters to the dataframe
-filtered_df = df[(df['Category'] == selected_category) & (df['Region'] == selected_region) & (df['Order Date'] >= start_date) & (df['Order Date'] <= end_date)]
+filtered_df = df[(df['Category'] == selected_category) & (df['Region'] == selected_region) & (df['Order Date'] >= date_range[0]) & (df['Order Date'] <= date_range[1])]
 
 # Display the filtered data
 st.write("Filtered Data:")
@@ -94,8 +93,8 @@ selected_option_perf = st.sidebar.selectbox("Product Performance", ["Line Chart 
 if selected_option_perf == "Line Chart - Sales Quantity Over Time":
     st.subheader('Line Chart - Sales Quantity Over Time')
     try:
-        df['Order Date'] = pd.to_datetime(df['Order Date'])
-        sales_quantity_over_time = df.groupby(pd.Grouper(key='Order Date', freq='M')).sum()['Quantity']
+        filtered_df['Order Date'] = pd.to_datetime(filtered_df['Order Date'])
+        sales_quantity_over_time = filtered_df.groupby(pd.Grouper(key='Order Date', freq='M')).sum()['Quantity']
         fig_line, ax = plt.subplots(figsize=(10, 6))
         sns.lineplot(x=sales_quantity_over_time.index, y=sales_quantity_over_time.values, ax=ax)
         ax.set_xlabel('Order Date')
