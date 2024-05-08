@@ -144,7 +144,7 @@ elif selected_option == "Bubble Chart - Profit vs Quantity":
         st.error(f"Error creating bubble chart: {e}")
 
 
-#CUSTOMER ANALYSIS
+#GEOGRAPHICAL INSIGHTS
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -219,3 +219,61 @@ elif selected_option == "Heatmap - Sales by Category and Region":
     except Exception as e:
         st.error(f"Error creating heatmap: {e}")
 
+#CUSTOMER ANALYSIS
+import streamlit as st
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Custom CSS to style the sidebar
+sidebar_style = """
+    background-color: lightblue;
+    padding: 10px;
+    border-radius: 10px;
+"""
+
+# Apply the custom CSS to the sidebar
+st.markdown(
+    f"""
+    <style>
+    .sidebar .sidebar-content {{
+        {sidebar_style}
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Load your dataset into a pandas DataFrame with error handling and proper encoding
+try:
+    df = pd.read_csv('https://github.com/nithara123/individual-coursework/raw/main/cleaned_dataset.csv', encoding='latin-1')
+except Exception as e:
+    st.error(f"Error loading dataset: {e}")
+
+# Sidebar menu options for customer analysis
+selected_option = st.sidebar.selectbox("Customer Analysis", ["Pie Chart - Customer Segmentation", "Bar Graph - Sales by Customer Segment"])
+
+# Display selected visualization based on user choice
+if selected_option == "Pie Chart - Customer Segmentation":
+    st.subheader('Pie Chart - Customer Segmentation')
+    try:
+        customer_segmentation = df['Segment'].value_counts()
+        fig_pie, ax = plt.subplots()
+        ax.pie(customer_segmentation, labels=customer_segmentation.index, autopct='%1.1f%%', startangle=90)
+        ax.axis('equal')
+        plt.title('Pie Chart - Customer Segmentation')
+        st.pyplot(fig_pie)
+    except Exception as e:
+        st.error(f"Error creating pie chart: {e}")
+
+elif selected_option == "Bar Graph - Sales by Customer Segment":
+    st.subheader('Bar Graph - Sales by Customer Segment')
+    try:
+        sales_by_segment = df.groupby('Segment')['Sales'].sum()
+        fig_bar, ax = plt.subplots(figsize=(8, 6))
+        sales_by_segment.plot(kind='bar')
+        plt.xlabel('Customer Segment')
+        plt.ylabel('Sales')
+        plt.title('Bar Graph - Sales by Customer Segment')
+        st.pyplot(fig_bar)
+    except Exception as e:
+        st.error(f"Error creating bar graph: {e}")
