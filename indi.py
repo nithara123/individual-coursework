@@ -5,7 +5,7 @@ import seaborn as sns
 
 # Custom CSS to style the sidebar
 sidebar_style = """
-    background-color: #6495ED; /* Mid-blue color code */
+    background-color: lightblue;
     padding: 10px;
     border-radius: 10px;
 """
