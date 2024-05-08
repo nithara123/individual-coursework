@@ -101,15 +101,46 @@ try:
 except Exception as e:
     st.error(f"Error loading dataset: {e}")
 
-# Sidebar menu option for the bubble chart
-st.sidebar.subheader("Product Performance")
-st.sidebar.write("Scatterplot - Discount vs Profit")
+# Sidebar menu options for different visualizations
+selected_option = st.sidebar.selectbox("Product Performance", ["Sales Quantity Over Time", "Discount vs Profit", "Sales Quantity by Category"])
 
-# Display the scatterplot
-st.subheader('Scatterplot - Discount vs Profit')
-fig_scatter, ax = plt.subplots(figsize=(10, 8))
-sns.scatterplot(x='Profit', y='Discount', data=df, alpha=0.5, ax=ax)
-ax.set_xlabel('Profit')
-ax.set_ylabel('Discount')
-ax.set_title('Scatterplot - Discount vs Profit')
-st.pyplot(fig_scatter)
+# Display selected visualization based on user choice
+if selected_option == "Sales Quantity Over Time":
+    st.subheader('Sales Quantity Over Time')
+    try:
+        df['Order Date'] = pd.to_datetime(df['Order Date'])
+        sales_quantity_over_time = df.groupby(pd.Grouper(key='Order Date', freq='M')).sum()['Sales Quantity']
+        fig_line, ax = plt.subplots(figsize=(10, 6))
+        sns.lineplot(x=sales_quantity_over_time.index, y=sales_quantity_over_time.values, ax=ax)
+        ax.set_xlabel('Order Date')
+        ax.set_ylabel('Sales Quantity')
+        ax.set_title('Line Graph - Sales Quantity Over Time')
+        st.pyplot(fig_line)
+    except Exception as e:
+        st.error(f"Error creating line graph: {e}")
+
+elif selected_option == "Discount vs Profit":
+    st.subheader('Discount vs Profit')
+    try:
+        fig_scatter, ax = plt.subplots(figsize=(10, 6))
+        sns.scatterplot(x='Profit', y='Discount', data=df, alpha=0.5, ax=ax)
+        ax.set_xlabel('Profit')
+        ax.set_ylabel('Discount')
+        ax.set_title('Scatterplot - Discount vs Profit')
+        st.pyplot(fig_scatter)
+    except Exception as e:
+        st.error(f"Error creating scatterplot: {e}")
+
+elif selected_option == "Sales Quantity by Category":
+    st.subheader('Sales Quantity by Category')
+    try:
+        sales_quantity_by_category = df.groupby('Category')['Sales Quantity'].sum()
+        fig_bar, ax = plt.subplots(figsize=(10, 6))
+        sales_quantity_by_category.plot(kind='bar', ax=ax)
+        ax.set_xlabel('Category')
+        ax.set_ylabel('Sales Quantity')
+        ax.set_title('Bar Graph - Sales Quantity by Category')
+        st.pyplot(fig_bar)
+    except Exception as e:
+        st.error(f"Error creating bar graph: {e}")
+
