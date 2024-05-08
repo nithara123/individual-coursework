@@ -113,7 +113,7 @@ elif selected_option_perf == "Bubble Chart - Profit vs Quantity":
         st.error(f"Error creating bubble chart: {e}")
 
 # GEOGRAPHICAL INSIGHTS
-selected_option_geo = st.sidebar.selectbox("Geographical Insights", ["Bar Graph - Sales by Region", "Line Graph - Sales Over Time by Region", "Heatmap - Sales by Category and Region"])
+selected_option_geo = st.sidebar.selectbox("Geographical Insights", ["Bar Graph - Sales by Region", "Heatmap - Sales by Category and Region"])
 
 if selected_option_geo == "Bar Graph - Sales by Region":
     st.subheader('Bar Graph - Sales by Region')
@@ -128,21 +128,6 @@ if selected_option_geo == "Bar Graph - Sales by Region":
         st.pyplot(fig_bar)
     except Exception as e:
         st.error(f"Error creating bar graph: {e}")
-
-elif selected_option_geo == "Line Graph - Sales Over Time by Region":
-    st.subheader('Line Graph - Sales Over Time by Region')
-    try:
-        df['Order Date'] = pd.to_datetime(df['Order Date'])
-        sales_over_time_by_region = df.groupby([pd.Grouper(key='Order Date', freq='M'), 'Region']).sum()['Sales'].unstack()
-        fig_line = plt.figure(figsize=(10, 6))
-        sales_over_time_by_region.plot(kind='line', ax=plt.gca())
-        plt.xlabel('Order Date')
-        plt.ylabel('Sales')
-        plt.xticks(rotation=45)
-        plt.title('Line Graph - Sales Over Time by Region')
-        st.pyplot(fig_line)
-    except Exception as e:
-        st.error(f"Error creating line graph: {e}")
 
 elif selected_option_geo == "Heatmap - Sales by Category and Region":
     st.subheader('Heatmap - Sales by Category and Region')
