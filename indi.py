@@ -1,3 +1,6 @@
+I apologize for the oversight. Let's add the functionality for the date range filter. Here's the updated code:
+
+```python
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -158,7 +161,9 @@ elif selected_option_geo == "Heatmap - Sales by Category and Region":
 # CUSTOMER ANALYSIS
 selected_option_cust = st.sidebar.selectbox("Customer Analysis", ["Pie Chart - Customer Segmentation", "Bar Graph - Sales by Customer Segment"])
 
-if selected_option_cust == "Pie Chart - Customer Segmentation":
+if selected_option_cust == "Pie
+
+ Chart - Customer Segmentation":
     st.subheader('Pie Chart - Customer Segmentation')
     try:
         customer_segmentation = df['Segment'].value_counts()
