@@ -22,7 +22,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Load your dataset into a pandas DataFrame with error handling and proper encoding
+
 try:
     df = pd.read_csv('https://github.com/nithara123/individual-coursework/raw/main/cleaned_dataset.csv', encoding='latin-1')
 except Exception as e:
@@ -31,7 +31,7 @@ except Exception as e:
 # Sidebar menu options
 selected_option = st.sidebar.selectbox("Sales Overview", ["Sales by Category", "Sales Over Time", "Sales Quantity Distribution"])
 
-# Display selected visualization based on user choice
+# Display selected visualization 
 if selected_option == "Sales by Category":
     st.subheader('Sales by Category')
     try:
